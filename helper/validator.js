@@ -1,4 +1,5 @@
 import joi from 'joi';
+import mongoose from 'mongoose';
 
 export const validateRegister = (data) => {
     const schema = joi.object({
@@ -40,6 +41,18 @@ export const petValidator = (data) => {
         category: joi.string().valid("dog", "cat", "bird", "other").required(),
         images: joi.string().allow("", null),
         owner: joi.string().required(),
+    })
+    return schema.validate(data)
+}
+const objectId = (value,helpers)=>{
+    if(!mongoose.Types.ObjectId.isValid(value)){
+        return helpers.error("any.invalid")
+    }
+    return value
+}
+export const idValidator = (data)=>{
+    const schema = joi.object({
+        id:joi.string().custom(objectId).required()
     })
     return schema.validate(data)
 }
