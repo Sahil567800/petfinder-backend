@@ -39,20 +39,33 @@ export const petValidator = (data) => {
         price: joi.number().required(),
         description: joi.string().max(300).required(),
         category: joi.string().valid("dog", "cat", "bird", "other").required(),
-        images: joi.string().allow("", null),
         owner: joi.string().required(),
     })
     return schema.validate(data)
+
 }
-const objectId = (value,helpers)=>{
-    if(!mongoose.Types.ObjectId.isValid(value)){
+
+export const updatePetValidator = (data) => {
+    const schema = joi.object({
+        name: joi.string().max(30),
+        breed: joi.string(),
+        price: joi.number(),
+        description: joi.string().max(300),
+        category: joi.string().valid("dog", "cat", "bird", "other"),
+        images: joi.string(),
+        owner: joi.string()
+    }).min(1)
+    return schema.validate(data)
+}
+const objectId = (value, helpers) => {
+    if (!mongoose.Types.ObjectId.isValid(value)) {
         return helpers.error("any.invalid")
     }
     return value
 }
-export const idValidator = (data)=>{
+export const idValidator = (data) => {
     const schema = joi.object({
-        id:joi.string().custom(objectId).required()
+        id: joi.string().custom(objectId).required()
     })
     return schema.validate(data)
 }

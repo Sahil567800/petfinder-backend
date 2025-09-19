@@ -35,5 +35,9 @@ export const petService = {
             throw new Error('Pet not found')
         }
         return {message:"Pet deleted Successfully"}
+    },
+    updatePet: async(id,data)=>{
+        const updatedpet = await petModel.findByIdAndUpdate(id,data,{new:true})
+        return updatedpet 
     }
 }
