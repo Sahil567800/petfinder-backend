@@ -69,3 +69,18 @@ export const idValidator = (data) => {
     })
     return schema.validate(data)
 }
+
+export const orderValidator = (data) => {
+    const schema = joi.object({
+        pet:joi.string().required(),
+        buyer:joi.string().required(),
+        seller:joi.string().required(),
+        status:joi.string().valid('pending','approved','rejected').default("pending"),
+        location:joi.object({
+            street:joi.string().required(),
+            city:joi.string().required(),
+            zipcode:joi.string().required()
+        }).required()
+    })
+    return schema.validate(data)
+}

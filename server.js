@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from 'dotenv';
 import userRoute from './routes/userRoute.js'
 import petRoute from './routes/petRoute.js'
+import orderRoute from './routes/orderRoute.js'
 import path from 'path';
 //app config
 dotenv.config()
@@ -20,8 +21,11 @@ app.use(cors())
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
+
 app.use('/api/user',userRoute)
 app.use('/api/pet',petRoute)
+app.use('/api/order',orderRoute)
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
