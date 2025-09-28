@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer"
 
 export const sendResetEmail = async (email, resetLink) => {
-    // try {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -21,8 +20,4 @@ export const sendResetEmail = async (email, resetLink) => {
             `,
         };
         await transporter.sendMail(mailOptions);
-    // }
-    // catch (error) {
-    //     throw new Error("Email not sent:")
-    // }
 }

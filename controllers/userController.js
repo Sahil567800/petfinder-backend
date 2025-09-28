@@ -24,7 +24,6 @@ const registerController = async (req, res) => {
 //Login controller
 const loginController = async (req, res) => {
     try {
-        console.log(req.body)
         const { error } = validateLogin(req.body);
         if (error) {
             return sendError(res, 400, error.details[0].message);

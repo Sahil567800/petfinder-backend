@@ -5,7 +5,8 @@ export const validateRegister = (data) => {
     const schema = joi.object({
         username: joi.string().min(3).max(30).required(),
         email: joi.string().email().required(),
-        password: joi.string().min(8).required()
+        password: joi.string().min(8).required(),
+        role: joi.string().valid('buyer', 'seller', 'admin')
     });
     return schema.validate(data);
 }
@@ -13,7 +14,8 @@ export const validateRegister = (data) => {
 export const validateLogin = (data) => {
     const schema = joi.object({
         email: joi.string().email().required(),
-        password: joi.string().min(8).required()
+        password: joi.string().min(8).required(),
+        role: joi.string().valid('buyer', 'seller', 'admin')
     })
     return schema.validate(data);
 }
@@ -72,14 +74,14 @@ export const idValidator = (data) => {
 
 export const orderValidator = (data) => {
     const schema = joi.object({
-        pet:joi.string().required(),
-        buyer:joi.string().required(),
-        seller:joi.string().required(),
-        status:joi.string().valid('pending','approved','rejected').default("pending"),
-        location:joi.object({
-            street:joi.string().required(),
-            city:joi.string().required(),
-            zipcode:joi.string().required()
+        pet: joi.string().required(),
+        buyer: joi.string().required(),
+        seller: joi.string().required(),
+        status: joi.string().valid('pending', 'accepted', 'rejected').default("pending"),
+        location: joi.object({
+            street: joi.string().required(),
+            city: joi.string().required(),
+            zipcode: joi.string().required()
         }).required()
     })
     return schema.validate(data)

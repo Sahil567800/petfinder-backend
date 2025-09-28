@@ -35,7 +35,7 @@ export const AuthenticateUser = async (userData) => {
     }
 
     const token = jwt.sign(
-        { id: user._id, user: user.email },
+        { id: user._id, user: user.email,role:user.role },
         process.env.JWT_SECRET,
         { expiresIn: "7d" })
 
@@ -44,6 +44,7 @@ export const AuthenticateUser = async (userData) => {
             id: user._id,
             username: user.username,
             email: user.email,
+            role:user.role
         },
         token,
     }
@@ -66,12 +67,12 @@ export const resetPassword = async (token, newPassword) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await userModel.findById(decoded.id);
-        if (user) {
+        if (!user) {
             throw new Error('invalid token or User not found')
         }
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(newPassword,salt)
-        await userModel.save();
+        await user.save();
         return { message: "Password reset successful" }
     }
     catch (error) {
